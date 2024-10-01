@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Lottie from "react-lottie";
 import animationData from "../../asset/animation_success.json";
 import { useDispatch } from "react-redux";
@@ -7,10 +7,8 @@ import { appThunkAction } from "../../redux/slices/appSlice";
 import { AppDispatch } from "../../redux/store";
 
 const EmailVerification = () => {
-    const [searchParams] = useSearchParams();
     const dispatch = useDispatch<AppDispatch>();
-    const email = searchParams.get("email");
-    const token = searchParams.get("token");
+    const { email, token } = useParams();
 
     const defaultOptions = {
         loop: false,
@@ -23,7 +21,9 @@ const EmailVerification = () => {
 
     const handleEmailVerification = () => {
         if (email && token) {
-            dispatch(appThunkAction.emailVerification({ email: email, token: token }));
+            const decodedEmail = decodeURIComponent(email);
+            const decodedToken = decodeURIComponent(token);
+            dispatch(appThunkAction.emailVerification({ email: decodedEmail, token: decodedToken }));
         }
     };
 

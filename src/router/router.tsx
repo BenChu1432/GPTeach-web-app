@@ -13,7 +13,7 @@ export const getRouter = (_: any) => {
     return createBrowserRouter(
         createRoutesFromElements(
             <Route path={"/"} element={<Root />}>
-                <Route path="/email-verification" element={<EmailVerification />} />
+                <Route path="/email-verification/:email/:token" element={<EmailVerification />} />
             </Route>
         )
     );
