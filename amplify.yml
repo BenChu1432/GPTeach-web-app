@@ -1,0 +1,16 @@
+version: 1
+frontend:
+    phases:
+        preBuild:
+            commands:
+                - yarn
+        build:
+            commands:
+                - yarn build:prod
+    artifacts:
+        baseDirectory: build # Make sure this matches the output directory of your build process
+        files:
+            - "**/*"
+    cache:
+        paths:
+            - node_modules/**/*

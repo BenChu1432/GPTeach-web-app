@@ -15,6 +15,9 @@ export default defineConfig(({ command, mode }) => {
     process.env = Object.assign(process.env, newMap);
 
     return {
+        build: {
+            outDir: "dist",
+        },
         plugins: [react()],
         optimizeDeps: {
             include: ["@emotion/styled"],
