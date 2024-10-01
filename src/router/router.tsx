@@ -10,12 +10,6 @@ export enum RouteEnum {
 }
 
 export const getRouter = (_: any) => {
-    return createBrowserRouter(
-        createRoutesFromElements(
-            <Route path={"/"} element={<Root />}>
-                <Route path="/email-verification" element={<EmailVerification />} />
-            </Route>
-        )
-    );
+    return createBrowserRouter(createRoutesFromElements(<Route path="/email-verification" element={<EmailVerification />} />));
 };
 export default getRouter;
