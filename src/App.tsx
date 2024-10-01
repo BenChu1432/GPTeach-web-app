@@ -3,11 +3,14 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import React from "react";
 import { RouterProvider } from "react-router-dom";
+import ConfigAxios from "./component/ConfigAxios";
 
 function App() {
     return (
         <Provider store={store}>
-            <RouterProvider router={getRouter(store)} />
+            <ConfigAxios store={store}>
+                <RouterProvider router={getRouter(store)} />
+            </ConfigAxios>
         </Provider>
     );
 }
