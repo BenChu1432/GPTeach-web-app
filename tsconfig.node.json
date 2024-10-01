@@ -4,11 +4,12 @@
         "composite": true,
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
         "skipLibCheck": true,
+        "outDir": "dist",
         "module": "ESNext",
         "moduleResolution": "bundler",
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "noEmit": true
     },
-    "include": ["vite.config.ts", "src/**/*"]
+    "include": ["vite.config.ts", "src/**/*", "src/asset/*.json"]
 }

@@ -8,7 +8,7 @@ frontend:
             commands:
                 - yarn build:prod
     artifacts:
-        baseDirectory: build # Make sure this matches the output directory of your build process
+        baseDirectory: dist
         files:
             - "**/*"
     cache:
