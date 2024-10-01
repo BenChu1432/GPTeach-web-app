@@ -35,6 +35,7 @@ const appSlice = createSlice({
 export const appThunkAction = {
     emailVerification: createAsyncThunk("authSlice/create-user", async (props: { email: string; token: string }, api) => {
         const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.VERIFY_EMAIL, props);
+        console.log("Axios Base URL:", apiClient.defaults.baseURL);
         return processRes(res, api);
     }),
 };

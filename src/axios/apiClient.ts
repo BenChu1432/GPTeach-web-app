@@ -14,7 +14,7 @@ const apiClient = axios.create({
         "Content-type": "application/json",
     },
 });
-
+console.log("Axios Base URL:", apiClient.defaults.baseURL); // Confirm the baseURL here too
 apiClient.defaults.withCredentials = true;
 
 // const notificationSocketRef = { current: "" };
