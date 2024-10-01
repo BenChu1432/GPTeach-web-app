@@ -5,7 +5,7 @@ import { CustomResponse } from "./responseTypes";
 import getEnv from "../utils/getEnv";
 
 const baseURL = getEnv().VITE_BACKEND_URL || "";
-console.log("baseURLbaseURLbaseURL", baseURL);
+console.log("Base URL:", baseURL);
 
 const apiClient = axios.create({
     baseURL,

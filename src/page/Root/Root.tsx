@@ -66,9 +66,8 @@ export default () => {
 
 const RootOutlet = () => {
     const { pathname } = useLocation();
-    const islogin = pathname === "/login";
     return (
-        <div style={{ flex: 1, marginLeft: islogin ? 0 : 200, height: "100vh" }}>
+        <div style={{ flex: 1, height: "100vh" }}>
             <Outlet />
         </div>
     );
