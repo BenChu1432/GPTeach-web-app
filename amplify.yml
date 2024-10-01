@@ -14,3 +14,6 @@ frontend:
     cache:
         paths:
             - node_modules/**/*
+env:
+    variables:
+        VITE_BACKEND_URL: "https://38jgnhg6lc.execute-api.ap-southeast-1.amazonaws.com/uat"
