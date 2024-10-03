@@ -10,7 +10,6 @@ function App() {
     return (
         <Provider store={store}>
             <ConfigAxios store={store}>
-                <LoadingSpinner />
                 <RouterProvider router={getRouter(store)} />
             </ConfigAxios>
         </Provider>

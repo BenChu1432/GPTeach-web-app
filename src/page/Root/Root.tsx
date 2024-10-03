@@ -6,6 +6,7 @@ import { RouteEnum } from "../../router/router";
 import { OverlayScrollbarsComponent, OverlayScrollbarsComponentRef } from "overlayscrollbars-react";
 import appSlice from "../../redux/slices/appSlice";
 import React from "react";
+import LoadingSpinner from "../../component/LoadingSpinner";
 // import AppLoading from "../../components/AppLoading";
 
 export default () => {
@@ -59,7 +60,7 @@ export default () => {
                     <RootOutlet />
                 </Container>
             </OverlayScrollbarsComponent>
-            {/* <AppLoading /> */}
+            <LoadingSpinner />
         </>
     );
 };
