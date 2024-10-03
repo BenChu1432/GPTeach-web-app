@@ -16,10 +16,9 @@ export const getRouter = (_: any) => {
     return createBrowserRouter(
         createRoutesFromElements(
             <Route path={"/"} element={<Root />}>
-                <Route path="/delete-account" element={<DeleteAccount />}>
-                    <Route index={false} path="email-sent" element={<DeleteAccountEmailSent />} />
-                    <Route index={false} path="success/:email/:token" element={<DeleteAccountSuccess />} />
-                </Route>
+                <Route path="/delete-account" element={<DeleteAccount />} />
+                <Route path="/delete-account/email-sent" element={<DeleteAccountEmailSent />} />
+                <Route path="/delete-account/success/:email/:token" element={<DeleteAccountSuccess />} />
                 <Route path="/email-verification/:email/:token" element={<EmailVerification />} />
             </Route>
         )
