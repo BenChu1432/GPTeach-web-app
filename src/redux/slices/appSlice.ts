@@ -42,7 +42,7 @@ export const appThunkAction = {
         return processRes(res, api);
     }),
     deleteAccount: createAsyncThunk("authSlice/delete-user", async (props: { email: string; token: string }, api) => {
-        const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.DELETE_USER, props);
+        const res = await apiClient.post<WbResponse<{}>>(apiRoutes.DELETE_USER, props);
         return processRes(res, api);
     }),
 };
