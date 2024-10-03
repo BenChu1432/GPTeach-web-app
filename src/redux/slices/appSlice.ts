@@ -34,7 +34,15 @@ const appSlice = createSlice({
 
 export const appThunkAction = {
     emailVerification: createAsyncThunk("authSlice/create-user", async (props: { email: string; token: string }, api) => {
-        const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.VERIFY_EMAIL, props);
+        const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.PATCH_VERIFY_EMAIL, props);
+        return processRes(res, api);
+    }),
+    sendGmailToVerifyAccountDeletion: createAsyncThunk("authSlice/send-gmail-to-verify-account-deletion", async (props: { email: string }, api) => {
+        const res = await apiClient.post<WbResponse<{}>>(apiRoutes.POST_DELETE_ACCOUNT_VERIFICATION_EMAIL, props);
+        return processRes(res, api);
+    }),
+    deleteAccount: createAsyncThunk("authSlice/delete-user", async (props: { email: string; token: string }, api) => {
+        const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.DELETE_USER, props);
         return processRes(res, api);
     }),
 };
