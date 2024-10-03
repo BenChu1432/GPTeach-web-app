@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Outlet, useLocation, useParams, useSearchParams } from "react-router-dom";
 import animationData from "../../asset/animation_success.json";
 import { useDispatch } from "react-redux";
-import { appThunkAction } from "../../redux/slices/appSlice";
+import appSlice, { appThunkAction } from "../../redux/slices/appSlice";
 import { AppDispatch } from "../../redux/store";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
@@ -24,10 +24,12 @@ const DeleteAccount = () => {
     };
 
     const handleGmailAccountToSendVerificationToDeleteAccount = () => {
+        dispatch(appSlice.actions.setLoading(true));
         dispatch(appThunkAction.sendGmailToVerifyAccountDeletion({ email: formData.current.email }))
             .unwrap()
             .finally(() => {
                 navigate("/delete-account/email-sent");
+                dispatch(appSlice.actions.setLoading(false));
             });
     };
 

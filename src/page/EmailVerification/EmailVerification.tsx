@@ -31,7 +31,6 @@ const EmailVerification = () => {
         handleEmailVerification();
     }, []);
 
-    // Example usage: Displaying the email and token
     return (
         <div style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <Lottie options={defaultOptions} height={200} width={200} />
