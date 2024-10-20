@@ -14,6 +14,7 @@ export type AppSliceState = {
     toast: { message: string; type: ToastType | string };
     timetableAction: TimetableAction;
     createClassPopperFromHourTimestampOnShow: string;
+    llmResponse: string;
 };
 
 type TimetableAction = "Create Class" | "Move Class" | "Resize Class" | null;
@@ -24,6 +25,7 @@ const initialState: AppSliceState = {
     timetableAction: null,
     createClassPopperFromHourTimestampOnShow: "",
     toast: { message: "", type: "error" },
+    llmResponse: "",
 };
 
 const appSlice = createSlice({
@@ -36,6 +38,11 @@ const appSlice = createSlice({
         setToast: (state, action: PayloadAction<{ message: string; type: ToastType | "" }>) => {
             state.toast = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(appThunkAction.sendLLMRequest.fulfilled, (state, action) => {
+            state.llmResponse = action.payload;
+        });
     },
 });
 
@@ -52,8 +59,8 @@ export const appThunkAction = {
         const res = await apiClient.post<WbResponse<{}>>(apiRoutes.DELETE_USER, props);
         return processRes(res, api);
     }),
-    sendLLMRequest: createAsyncThunk("appSlice/send-llm-request", async (props: { systemImage: string; assistantMessage: string; userMessage: string }, api) => {
-        const res = await apiClient.post<WbResponse<{}>>(apiRoutes.POST_LLM_REQUEST, props);
+    sendLLMRequest: createAsyncThunk("appSlice/send-llm-request", async (props: { systemMessage: string; assistantMessage: string; userMessage: string }, api) => {
+        const res = await apiClient.post<WbResponse<string>>(apiRoutes.POST_LLM_REQUEST, props);
         return processRes(res, api);
     }),
 };

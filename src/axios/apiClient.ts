@@ -35,6 +35,7 @@ export const configApiClient = (apiClient: AxiosInstance, store: ReduxToolkitSto
                 if (errorMessage === "JWT_EXPIRED") {
                     originalConfig._retry = true;
                     const refreshToken = (store?.getState() as RootState)?.auth.refreshToken;
+                    console.log("refreshToken:", refreshToken);
                     const res = await apiClient.post<CustomResponse<{ accessToken: string }>>(apiRoutes.POST_REFRESH_TOKEN, { refreshToken });
                     const { success } = res.data;
                     if (!success) {
