@@ -31,7 +31,7 @@ const FormInputField = (props: {
                 }}
                 type={props.isPassword ? "password" : undefined}
                 defaultValue={props.defaultValue}
-                placeholder={`Please input ${title}`}
+                placeholder={`Please Enter ${title}`}
                 onChange={(e) => onChange(e.target.value)}
                 {...(value ? { value } : {})}
                 {...inputProps}
