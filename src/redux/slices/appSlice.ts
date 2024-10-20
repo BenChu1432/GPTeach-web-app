@@ -1,14 +1,17 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createListenerMiddleware, createSlice } from "@reduxjs/toolkit";
 import apiClient from "../../axios/apiClient";
 import apiRoutes from "../../axios/apiRoutes";
-import { WbResponse } from "../../data/dto";
+import { ToastType, WbResponse } from "../../data/dto";
 import { processRes } from "../../utils/processRes";
 import getEnv from "../../utils/getEnv";
+import registerEffects from "../../utils/registerEffects";
+import { loadingActions } from "../../utils/loadingActions";
 
 export type AppSliceState = {
     loading: boolean;
     activePath: string | null;
     // Used to control when to open a dialog component
+    toast: { message: string; type: ToastType | string };
     timetableAction: TimetableAction;
     createClassPopperFromHourTimestampOnShow: string;
 };
@@ -20,6 +23,7 @@ const initialState: AppSliceState = {
     activePath: null,
     timetableAction: null,
     createClassPopperFromHourTimestampOnShow: "",
+    toast: { message: "", type: "error" },
 };
 
 const appSlice = createSlice({
@@ -29,22 +33,37 @@ const appSlice = createSlice({
         setLoading: (state, action: PayloadAction<boolean>) => {
             state.loading = action.payload;
         },
+        setToast: (state, action: PayloadAction<{ message: string; type: ToastType | "" }>) => {
+            state.toast = action.payload;
+        },
     },
 });
 
 export const appThunkAction = {
-    emailVerification: createAsyncThunk("authSlice/create-user", async (props: { email: string; token: string }, api) => {
+    emailVerification: createAsyncThunk("appSlice/create-user", async (props: { email: string; token: string }, api) => {
         const res = await apiClient.patch<WbResponse<{}>>(apiRoutes.PATCH_VERIFY_EMAIL, props);
         return processRes(res, api);
     }),
-    sendGmailToVerifyAccountDeletion: createAsyncThunk("authSlice/send-gmail-to-verify-account-deletion", async (props: { email: string }, api) => {
+    sendGmailToVerifyAccountDeletion: createAsyncThunk("appSlice/send-gmail-to-verify-account-deletion", async (props: { email: string }, api) => {
         const res = await apiClient.post<WbResponse<{}>>(apiRoutes.POST_DELETE_ACCOUNT_VERIFICATION_EMAIL, props);
         return processRes(res, api);
     }),
-    deleteAccount: createAsyncThunk("authSlice/delete-user", async (props: { email: string; token: string }, api) => {
+    deleteAccount: createAsyncThunk("appSlice/delete-user", async (props: { email: string; token: string }, api) => {
         const res = await apiClient.post<WbResponse<{}>>(apiRoutes.DELETE_USER, props);
         return processRes(res, api);
     }),
+    sendLLMRequest: createAsyncThunk("appSlice/send-llm-request", async (props: { systemImage: string; assistantMessage: string; userMessage: string }, api) => {
+        const res = await apiClient.post<WbResponse<{}>>(apiRoutes.POST_LLM_REQUEST, props);
+        return processRes(res, api);
+    }),
 };
+
+export const appMiddleware = createListenerMiddleware();
+registerEffects(appMiddleware, [
+    ...loadingActions(appThunkAction.sendLLMRequest),
+    {
+        rejections: [appThunkAction.sendLLMRequest.rejected],
+    },
+]);
 
 export default appSlice;

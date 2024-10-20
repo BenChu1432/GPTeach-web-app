@@ -5,6 +5,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import persistStore from "redux-persist/es/persistStore";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import appSlice from "./slices/appSlice";
+import authSlice, { authMiddleware } from "./slices/authSlice";
 
 // a fix following the guide from https://www.youtube.com/watch?v=fjPIJZ1Eokg
 const createNoopStorage = () => {
@@ -34,10 +35,10 @@ const authPersistConfig = {
 
 export const store = configureStore({
     reducer: {
-        // auth: persistReducer<ReturnType<typeof authSlice.reducer>>(authPersistConfig, authSlice.reducer),
+        auth: persistReducer<ReturnType<typeof authSlice.reducer>>(authPersistConfig, authSlice.reducer),
         app: appSlice.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(authMiddleware.middleware),
 });
 
 export const persistor = persistStore(store);
